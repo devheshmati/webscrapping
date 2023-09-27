@@ -1,20 +1,16 @@
 import time
 from selenium import webdriver
 
-# Create a new FirefoxProfile object.
 profile = webdriver.FirefoxProfile()
+profile.set_preference('network.proxy.type', 0)
 
-# Set the network.proxy.type preference to 0 (No proxy).
-profile.set_preference("network.proxy.type", 0)
-
-# Create a new FirefoxDriver object, passing in the FirefoxProfile object.
 driver = webdriver.Firefox(firefox_profile=profile)
+url = 'https://digikala.com/users/login'
 
-# Open the desired URL.
-driver.get("https://digikala.com/users/login")
+def getUrl(url):
+    driver.get(url)
+    time.sleep(2)
+    driver.close()
+    pass
 
-# Wait for the page to load.
-time.sleep(1)
-
-# Close the browser.
-driver.close()
+getUrl(url)
