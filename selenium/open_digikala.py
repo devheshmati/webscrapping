@@ -1,16 +1,26 @@
-import time
 from selenium import webdriver
+from selenium.webdriver.common.proxy import Proxy, ProxyType
+from selenium.webdriver.common.by import By
 
-profile = webdriver.FirefoxProfile()
-profile.set_preference('network.proxy.type', 0)
+# Create a FirefoxOptions object
+options = webdriver.FirefoxOptions()
 
-driver = webdriver.Firefox(firefox_profile=profile)
+# Create a Proxy object and set its type to 'DIRECT' to specify no proxy
+proxy = Proxy()
+proxy.proxy_type = ProxyType.DIRECT
+
+# Add the proxy settings to the FirefoxOptions object
+options.proxy = proxy
+
+# Create the WebDriver with the specified options
+driver = webdriver.Firefox(options=options)
 url = 'https://digikala.com/users/login'
 
-def getUrl(url):
+try:
     driver.get(url)
-    time.sleep(2)
-    driver.close()
-    pass
-
-getUrl(url)
+    input = driver.find_element(By.NAME, 'username')
+    input.send_keys('womoboy')
+    button = driver.find_element(By.TAG_NAME, 'button')
+    button.click()
+except Exception as e:
+    print('error', str(e)) 
